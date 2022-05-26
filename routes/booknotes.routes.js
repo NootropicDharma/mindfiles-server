@@ -15,6 +15,18 @@ router.get('/notes', (req, res) => {
 
 })
 
+
+router.get('/notesbymemory/:id', (req, res) => {
+    const { id } = req.params
+    Memory.findById(id)
+    .populate("notes", "_id BookTitle Pages What Where When Who")
+    .then( datos => {
+        res.json(datos.notes)
+    })
+    .catch((err)=> console.log(err))
+
+})
+
 router.post('/createnote', (req, res)=> {
     const {BookTitle,Pages,What,Where,When,Who} = req.body
     

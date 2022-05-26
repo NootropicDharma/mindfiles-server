@@ -16,6 +16,19 @@ router.get('/palaces', (req, res) => {
 })
 
 
+//el id es del usuario
+router.get('/palacesbyuser/:id', (req, res) => {
+    const { id } = req.params
+    User.findById(id)
+    .populate("palaces", "_id title")
+    .then( datos => {
+        res.json(datos.palaces)
+    })
+    .catch((err)=> console.log(err))
+
+})
+
+
 router.post('/palaces', (req, res)=> {
     const {title, description, numberOfRooms} = req.body
     

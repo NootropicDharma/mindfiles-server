@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 
 const Room = require('../models/Room.model')
 const Memory = require('../models/Memory.model')
+const Palace = require('../models/Palace.model')
 
 
 router.get('/memories', (req, res) => {
@@ -11,6 +12,18 @@ router.get('/memories', (req, res) => {
     .then( allMemories => {
         res.json(allMemories)
         
+    })
+    .catch((err)=> console.log(err))
+
+})
+
+//el id es del usuario
+router.get('/memoriesbyroom/:id', (req, res) => {
+    const { id } = req.params
+    Room.findById(id)
+    .populate("memories", "_id title description")
+    .then( datos => {
+        res.json(datos.memories)
     })
     .catch((err)=> console.log(err))
 

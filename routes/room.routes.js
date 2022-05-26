@@ -18,6 +18,17 @@ router.get('/room', (req, res) => {
 
 })
 
+router.get('/roomsbypalace/:id', (req, res) => {
+    const { id } = req.params
+    Palacio.findById(id)
+    .populate("rooms", "_id title")
+    .then( datos => {
+        res.json(datos.rooms)
+    })
+    .catch((err)=> console.log(err))
+
+})
+
 // router.delete('/roomdelete/:id', (req, res, next)=>{
 //     const {id} = req.params;
 
